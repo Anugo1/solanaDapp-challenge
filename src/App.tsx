@@ -57,8 +57,8 @@ export default function App() {
   );
 
 	// create state variable for the wallet key
-  const [walletKey, setWalletKey] = useState<String | undefined>(
-  undefined
+  const [walletKey, setWalletKey] = useState<String | null>(
+  null
   );
 
   // this is the function that runs whenever the component updates (e.g. render, refresh)
@@ -103,7 +103,11 @@ export default function App() {
 		// checks if phantom wallet exists
     if (solana) {
       try {
-				// ADD DISCONNECT LOGIC HERE
+				await solana.disconnect();
+      // Clear the wallet key state
+      setWalletKey(null);
+
+      console.log('Wallet disconnected successfully');
       } catch (err) {
           console.log(err);
       }
@@ -130,7 +134,7 @@ export default function App() {
         )}
         {provider && walletKey && (
             <div>
-              <p>{/*FOR WALLET ADDRESS*/}</p>
+              {<h3>Account connected</h3>}
               <button
                 style={{
                   fontSize: "16px",
